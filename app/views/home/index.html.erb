@@ -1,0 +1,16 @@
+<div class="row">
+
+<% @tweets.each do |tweet| %>
+  <div class="col-12 border border-info p-3 mt-2">
+    <%= image_tag (tweet.user.photo_url), :class => 'avatar-in-tweet rounded'%>
+    <%= tweet.content%>
+    <hr/>
+    <div class="float-right">
+
+    <%= tweet.likes.count%> likes | 0 re-tweets
+  </div>
+
+  </div>
+  <% end %>
+  <%= link_to_next_page @tweets, 'Mostrar mas' %>
+</div>
