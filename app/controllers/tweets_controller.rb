@@ -1,6 +1,6 @@
 class TweetsController < ApplicationController
   before_action :set_tweet, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_current_tweet, only: [:likes, :retweet]
   # GET /tweets
   # GET /tweets.json
   def index
@@ -10,6 +10,7 @@ class TweetsController < ApplicationController
   # GET /tweets/1
   # GET /tweets/1.json
   def show
+
   end
 
   # GET /tweets/new
@@ -25,11 +26,11 @@ class TweetsController < ApplicationController
   # POST /tweets.json
   def create
     @tweet = Tweet.new(tweet_params)
-    @tweet.user = current_user
+    @tweet.user_id = current_user.id
 
     respond_to do |format|
       if @tweet.save
-        format.html { redirect_to @tweet, notice: 'Tweet was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Tweet was successfully created.' }
         format.json { render :show, status: :created, location: @tweet }
       else
         format.html { render :new }
@@ -62,10 +63,30 @@ class TweetsController < ApplicationController
     end
   end
 
+def likes
+  if @tweet.is_liked?(current_user)
+    @tweet.remove_like(current_user)
+  else
+    @tweet.add_like(current_user)
+  end
+  redirect_to root_path
+end
+
+def retweet
+  new_tweet = Tweet.create(content: @tweet.content, user: current_user, rt_ref: @tweet.id)
+
+  redirect_to root_path
+end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tweet
       @tweet = Tweet.find(params[:id])
+    end
+
+    def set_current_tweet
+      @tweet = Tweet.find(params[:tweet_id])
+
     end
 
     # Only allow a list of trusted parameters through.

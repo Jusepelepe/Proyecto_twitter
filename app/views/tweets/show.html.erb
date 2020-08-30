@@ -1,14 +1,57 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
 
-<p>
-  <strong>Content:</strong>
-  <%= @tweet.content %>
-</p>
 
-<p>
-  <strong>User:</strong>
-  <%= @tweet.user %>
-</p>
+    <div class="col-12 border border-info p-3 my-4 shadow rounded tweet_card">
+      <div class="row ">
+        <div class="col-1 img-fluid  ">
+          <% if @tweet.user.photo_url? %>
+            <%= image_tag((@tweet.user.photo_url), class: "avatar-in-tweet rounded ") %>
+          <% else %>
+            <%= image_tag('https://www.pngfind.com/pngs/m/676-6764065_default-profile-picture-transparent-hd-png-download.png', class: "avatar-in-tweet rounded") %>
+          <% end %>
+        </div>
 
-<%= link_to 'Edit', edit_tweet_path(@tweet) %> |
-<%= link_to 'Back', tweets_path %>
+        <div class="col-10 ml-3">
+          <span class='username font-weight-bold'><%= @tweet.user.username %></span><br/>
+
+          <span class="datetime">
+            <%= link_to '<i class="fa fa-calendar" aria-hidden="true"></i>'.html_safe+distance_of_time_in_words(Time.now, @tweet.created_at), @tweet %>
+          </span><br/>
+
+          <div class="tweet-content p-3 mb-2"><%= @tweet.content %></div>
+          <% if @tweet.is_retweet? %>
+            <%= link_to "Retweet", @tweet.tweet_ref %>
+          <% end %>
+        </div>
+
+        <div class="col-12">
+          <hr/>
+
+          <div class="p-3 text-right mb-2 tweet-options">
+            <span>
+              <%= @tweet.likes.count%>
+              <%= link_to ('<i class="'+@tweet.like_icon(current_user)+' text-danger"></i>').html_safe, tweet_likes_path(@tweet), method: :post %>
+
+            </span>
+            |
+            <span>
+              <%= @tweet.count_rt %>
+
+              <% if @tweet.count_rt > 0 %>
+                <%= link_to '<i class="fas fa-retweet text-primary"></i>'.html_safe, tweet_retweet_path(@tweet), method: :post %>
+              <% else %>
+                <%= link_to '<i class="fas fa-retweet text-muted"></i>'.html_safe, tweet_retweet_path(@tweet), method: :post %>
+              <% end %>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="mt-2 ml-5 ">
+  <% @tweet.liking_users.each do |user| %>
+    <%= image_tag (user.photo_url), class: 'avatar-in-tweet rounded img-like'%>
+  <% end %>
+</div>
+</div>

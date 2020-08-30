@@ -1,0 +1,67 @@
+body {
+  background-image: url(bgimg.png) !important;
+
+  background-position: 100px -130px;
+ background-color: #2f2f33 !important;
+ font-family: 'Lora', serif !important;
+
+}
+
+.avatar-in-tweet {
+  width: 90px;
+  height: 90px;
+}
+
+.datetime {
+  a {
+    font-size: 12px;
+    color: rgba(30,87,153,1);
+    text-decoration: none;
+
+  }
+}
+
+.tweet_card {
+  background-color: #ffffff;
+}
+
+.username {
+  font-size: 20px;
+}
+
+.navbar-brand {
+  padding-left: 150px !important;
+  height: auto;
+  font-size: 35px !important;
+}
+
+.navbar {
+  height: auto;
+}
+
+h1, h2, h3, h4, h5, .field {
+  color: #ffffff !important;
+}
+
+.img-like {
+  width: 50px;
+  height: 50px;
+}
+
+.rt-botom {
+  background-color: #48484e;
+  color: #ffffff;
+  text-decoration: none;
+
+}
+
+.follow-btn {
+  text-decoration: none;
+  font-size: 12px;
+  color: rgba(30,87,153,1);
+
+}
+
+.tweet-content {
+  background-color: #d7d7d7 !important;
+}
