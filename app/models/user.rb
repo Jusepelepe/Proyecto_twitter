@@ -23,4 +23,24 @@ class User < ApplicationRecord
     users_followed.include? (user)
   end
 
+  def friends_count
+    self.friends.count
+  end
+
+  def tweets_count
+    self.tweets.where(rt_ref: nil).count
+  end
+
+  def likes_give_it
+    self.likes.count
+  end
+
+  def retweets_give_it
+    self.tweets.where.not(rt_ref: nil).count
+  end
+
+
+
+
+
 end
