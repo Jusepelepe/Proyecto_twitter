@@ -1,5 +1,17 @@
 <div class="row">
   <% if user_signed_in? %>
+
+  <div class="mt-2 w-100">
+    <%= form_tag(root_path, method: :get) do %>
+      <div class="form-group">
+        <%= submit_tag('Buscar', :class => 'btn btn-secondary shadow float-right ml-1') %>
+
+        <%= text_field_tag(:search, params[:search], :class => 'shadow form-control d-inline float-right w-25') %>
+        <%= link_to "<i class='far fa-times-circle'></i>".html_safe, root_path, :class => 'float-right mr-1 btn btn-secondary' %>
+
+      </div>
+    <% end %>
+  </div>
     <div class="col-12">
       <%= render 'tweets/form', tweet: @tweet %>
     <% end %>
@@ -9,5 +21,9 @@
 
   <%= render 'shared/tweet_card', tweet: @tweet %>
 
-  <%= paginate @tweets %>
+  <div class="row ml-3 mt-2 float-right">
+
+    <%= paginate @tweets %>
+  </div>
+
 </div>

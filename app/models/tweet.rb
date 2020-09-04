@@ -1,4 +1,7 @@
 class Tweet < ApplicationRecord
+  include ActionView::Helpers::UrlHelper
+
+  before_save :add_hashtags
   validates :content, presence: true
 
 
@@ -9,8 +12,19 @@ class Tweet < ApplicationRecord
   # paginates_per 50
   paginates_per 6
 
-  scope :tweets_for_me, -> (user){where(user_id: user.arr_friends_id)}
+  scope :tweets_for_me, -> (user){where(user_id: user.friends.pluck(:friend_id).push(user.id))}
 
+  def add_hashtags
+    new_array = []
+    self.content.split(' ').each do |word|
+      if word.start_with?("#")
+        word_parsed = word.sub '#', '%23'
+        word = link_to(word, Rails.application.routes.url_helpers.root_path+'?search='+word_parsed)
+      end
+      new_array.push(word)
+    end
+    self.content = new_array.join(" ")
+  end
 
   def is_liked?(user)
     if self.liking_users.include?(user)

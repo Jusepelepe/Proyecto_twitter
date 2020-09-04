@@ -9,10 +9,10 @@ class User < ApplicationRecord
   has_many :liked_tweet, :through => :likes, :source => :tweet
   has_many :friends
 
+  # def arr_friends_id
+  #   self.friends.pluck(:friend_id)
+  # end
 
-  def arr_friends_id
-    self.friends.pluck(:friend_id)
-  end
 
   def users_followed
     arr_ids = self.friends.pluck(:friend_id)
@@ -38,7 +38,6 @@ class User < ApplicationRecord
   def retweets_give_it
     self.tweets.where.not(rt_ref: nil).count
   end
-
 
 
 

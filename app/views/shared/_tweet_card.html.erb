@@ -32,7 +32,7 @@
             <%= link_to '<i class="fa fa-calendar" aria-hidden="true"></i>'.html_safe+distance_of_time_in_words(Time.now, tweet.created_at), tweet %>
           </span><br/>
 
-          <div class="tweet-content p-3 mb-2 rounded"><%= tweet.content %></div>
+          <div class="tweet-content p-3 mb-2 rounded"><%= tweet.content.html_safe %></div>
 
           <% if tweet.is_retweet? %>
             <%= link_to "Retweeteado!", tweet.tweet_ref, class: 'rt-botom float-right' %>
